@@ -6,13 +6,13 @@
 #    By: akoaik <akoaik@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/11/04 11:29:56 by akoaik            #+#    #+#              #
-#    Updated: 2025/11/04 19:12:10 by akoaik           ###   ########.fr        #
+#    Updated: 2025/11/06 02:30:09 by akoaik           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 import requests
 from parse import falg_parse
-from spider import spider
+from spider_cloud import spider
 
 def main () :
     args = falg_parse()
@@ -26,5 +26,8 @@ def main () :
             spider(args.url, depth=1, args=args)
     except requests.exceptions.RequestException:
         print(f"Error: Unable to connect to {args.url}")
+
+
+
 
 main()
