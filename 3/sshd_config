@@ -1,0 +1,119 @@
+# SSH Server Configuration
+# This allows you to remotely access the Docker container
+
+## Basic Settings ##
+
+# Port to listen on (4242 instead of default 22)
+Port 4242
+
+# Listen on all network interfaces
+ListenAddress 0.0.0.0
+
+# Protocol version (2 is more secure than 1)
+Protocol 2
+
+
+## Host Keys ##
+# These are the server's identity keys
+# They will be generated automatically on first run
+
+HostKey /etc/ssh/ssh_host_rsa_key
+HostKey /etc/ssh/ssh_host_ecdsa_key
+HostKey /etc/ssh/ssh_host_ed25519_key
+
+
+## Authentication ##
+
+# Allow root login (needed for Docker container management)
+# For production, you might want to set this to "no" and use a regular user
+PermitRootLogin yes
+
+# Enable public key authentication (most secure)
+PubkeyAuthentication yes
+
+# Where to look for authorized keys
+AuthorizedKeysFile .ssh/authorized_keys
+
+# Allow password authentication (for initial setup)
+# For better security, set this to "no" after you add your SSH key
+PasswordAuthentication yes
+
+# Allow empty passwords? (NO! Bad security)
+PermitEmptyPasswords no
+
+# Challenge-response authentication
+ChallengeResponseAuthentication no
+
+# Kerberos authentication (not needed)
+KerberosAuthentication no
+
+# GSSAPI authentication (not needed)
+GSSAPIAuthentication no
+
+
+## Security Settings ##
+
+# Disconnect if user doesn't login within this time
+LoginGraceTime 60
+
+# Maximum authentication attempts before disconnect
+MaxAuthTries 3
+
+# Maximum number of open sessions
+MaxSessions 10
+
+# Use PAM (Pluggable Authentication Modules)
+UsePAM yes
+
+# Prevent using .rhosts files (security)
+IgnoreRhosts yes
+
+# Don't read user's ~/.rhosts and ~/.shosts files
+HostbasedAuthentication no
+
+# Don't allow TCP forwarding for security (optional)
+# If you need port forwarding, set to "yes"
+AllowTcpForwarding yes
+
+# Allow X11 forwarding (graphical apps over SSH)
+X11Forwarding no
+
+# Print last login time
+PrintLastLog yes
+
+# Send keep-alive messages to prevent timeout
+TCPKeepAlive yes
+
+# Client alive interval (seconds) - prevents disconnects
+ClientAliveInterval 60
+ClientAliveCountMax 3
+
+
+## Subsystems ##
+
+# SFTP subsystem (for file transfers)
+Subsystem sftp /usr/lib/openssh/sftp-server
+
+
+## Logging ##
+
+# Log level (VERBOSE for debugging, INFO for normal)
+LogLevel INFO
+
+# Where to send logs (via syslog)
+SyslogFacility AUTH
+
+
+## Banner ##
+
+# Display a banner before login (optional)
+# Banner /etc/ssh/banner.txt
+
+
+## Performance ##
+
+# Use DNS lookup for hostnames (can slow down connections)
+UseDNS no
+
+# Compression (can speed up on slow connections)
+Compression delayed
