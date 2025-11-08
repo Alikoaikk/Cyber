@@ -1,58 +1,15 @@
-# Tor Configuration for Hidden Service
-# This creates your .onion address and routes traffic
-
-## Hidden Service Configuration ##
-
-# Where to store the hidden service data
-# This directory will contain:
-# - hostname file (your .onion address)
-# - private_key (KEEP THIS SECRET!)
 HiddenServiceDir /var/lib/tor/hidden_service/
-
-# Port mapping: .onion:80 -> localhost:80 (nginx)
-# When someone visits your .onion address on port 80,
-# Tor will forward the request to localhost:80 (where Nginx is listening)
 HiddenServicePort 80 127.0.0.1:80
 
-
-## General Tor Settings ##
-
-# Run Tor as this user (security)
-User tor
-
-# Where to store Tor data
+User debian-tor
 DataDirectory /var/lib/tor
-
-# Logging level (notice = normal, info = verbose, debug = very verbose)
 Log notice file /var/log/tor/notices.log
 
-# Control port (for managing Tor - optional)
-# ControlPort 9051
-
-# Enable hidden service statistics (optional - for monitoring)
-# HiddenServiceStatistics 1
-
-
-## Security Settings ##
-
-# Prevent Tor from running as root
-# This is a safety feature
 RunAsDaemon 1
 
-# Circuit build timeout (how long to wait for Tor connection)
-CircuitBuildTimeout 60
-
-# Number of introduction points (how many entry points to your service)
-# More = better availability, but slightly slower
-# HiddenServiceNumIntroductionPoints 3
-
-
-## Optional: Multiple Ports ##
-# If you want to run HTTPS later, uncomment this:
-# HiddenServicePort 443 127.0.0.1:443
-
-
-## Optional: Hidden Service Version ##
-# By default uses v3 .onion addresses (recommended)
-# v3 addresses are 56 characters long (more secure than v2)
-# No configuration needed - v3 is automatic
+# Performance optimizations for faster Tor connections
+LearnCircuitBuildTimeout 0
+CircuitBuildTimeout 10
+KeepalivePeriod 60 
+NewCircuitPeriod 15 
+MaxCircuitDirtiness 600 
